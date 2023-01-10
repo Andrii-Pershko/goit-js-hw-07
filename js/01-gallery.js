@@ -23,13 +23,13 @@ galery.insertAdjacentHTML("beforeend", formatingGalleryItems);
 //код делегування який я мав писати для прослуховування подій, 
 //але бібліотека як виявилось сама все робить
 
-// galery.addEventListener('click', showOriginalImg)
+galery.addEventListener('click', showOriginalImg)
 
-// function showOriginalImg(event) {
-//     event.preventDefault();
-//     if (event.target.nodeName !== 'IMG') {
-//         return
-//     }
+function showOriginalImg(event) {
+    event.preventDefault();
+    if (event.target.nodeName !== 'IMG') {
+        return
+    }
         
-// }
+}
 
