@@ -5,7 +5,7 @@ const galery = document.querySelector('.gallery');
 
 const formatingGalleryItems = galleryItems.map(({original, preview, description}) => 
     `<div class="gallery__item">
-    <a class="gallery__link" href="${original}" data-lightbox="${original}">
+    <a data-fslightbox class="gallery__link" href="${original}" data-lightbox="${original}">
       <img
         class="gallery__image"
         src="${preview}"
@@ -18,10 +18,6 @@ const formatingGalleryItems = galleryItems.map(({original, preview, description}
 
 
 galery.insertAdjacentHTML("beforeend", formatingGalleryItems);
-
-
-//код делегування який я мав писати для прослуховування подій, 
-//але бібліотека як виявилось сама все робить
 
 galery.addEventListener('click', showOriginalImg)
 
