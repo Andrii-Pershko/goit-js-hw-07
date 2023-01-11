@@ -4,8 +4,6 @@ import { galleryItems } from './gallery-items.js';
 
 const galleryEl = document.querySelector('.gallery');
 
-let modal = '';
-
 galleryEl.addEventListener("click", selectOnlyImgCard);
 
 const galeryMarkUp = galleryItems.map(({ description, original, preview }) => {
@@ -24,7 +22,6 @@ const galeryMarkUp = galleryItems.map(({ description, original, preview }) => {
 }).join(" ");
 
 galleryEl.insertAdjacentHTML('afterbegin', galeryMarkUp);
-
 
 function selectOnlyImgCard(e) {
     e.preventDefault();
@@ -46,23 +43,13 @@ function createModal(imgLink) {
 `)
 
     instance.show();
-    modal = document.querySelector('.basicLightbox');
-    addEventListenerKeyEsc();
-
-};
-
-function addEventListenerKeyEsc() {
     window.addEventListener("keydown", onEscKeyPress);
-};
-
-function onEscKeyPress(event) {
-    const isEscKey = event.code === "Escape"
-    if (isEscKey) {
-        modal.remove();
-        window.removeEventListener("keydown", onEscKeyPress);
-
+    
+    function onEscKeyPress(event) {
+        const isEscKey = event.code === "Escape";
+        if (isEscKey) {
+            instance.close();
+            window.removeEventListener("keydown", onEscKeyPress);
+        }
     }
-}
-
-
-
+};
