@@ -1,31 +1,68 @@
 import { galleryItems } from './gallery-items.js';
 
-const galery = document.querySelector('.gallery');
+// Change code below this line
+
+const galleryEl = document.querySelector('.gallery');
+
+let modal = '';
+
+galleryEl.addEventListener("click", selectOnlyImgCard);
+
+const galeryMarkUp = galleryItems.map(({ description, original, preview }) => {
+    return `
+    <div class="gallery__item">
+        <a class="gallery__link" href="${original}">
+            <img
+                class="gallery__image"
+                src="${preview}"
+                data-source="${original}"
+                alt="${description}"
+            />
+        </a>
+    </div>
+    `
+}).join(" ");
+
+galleryEl.insertAdjacentHTML('afterbegin', galeryMarkUp);
 
 
-const formatingGalleryItems = galleryItems.map(({original, preview, description}) => 
-    `<div class="gallery__item">
-    <a data-fslightbox class="gallery__link" href="${original}" data-lightbox="${original}">
-      <img
-        class="gallery__image"
-        src="${preview}"
-        data-source="${original}"
-        alt="${description}"
-      />
-    </a>
-  </div>`
-).join('');
+function selectOnlyImgCard(e) {
+    e.preventDefault();
+    const tagName = e.target.tagName;
+    const imgLink = e.target.dataset.source;
 
-
-galery.insertAdjacentHTML("beforeend", formatingGalleryItems);
-
-galery.addEventListener('click', showOriginalImg)
-
-function showOriginalImg(event) {
-    event.preventDefault();
-    if (event.target.nodeName !== 'IMG') {
+    if (tagName !== 'IMG') {
+        console.log("Click not on the picture");
         return
     }
-        
+
+    createModal(imgLink)
+    
+};
+
+function createModal(imgLink) {
+    const instance = basicLightbox.create(`
+    <img src="${imgLink}" width="800" height="600">
+`)
+
+    instance.show();
+    modal = document.querySelector('.basicLightbox');
+    addEventListenerKeyEsc();
+
+};
+
+function addEventListenerKeyEsc() {
+    window.addEventListener("keydown", onEscKeyPress);
+};
+
+function onEscKeyPress(event) {
+    const isEscKey = event.code === "Escape"
+    if (isEscKey) {
+        modal.remove();
+        window.removeEventListener("keydown", onEscKeyPress);
+
+    }
 }
+
+
 
